@@ -8,6 +8,10 @@ function createState(game){
     object.tint = getColor(o.owner);
     object.scale.setTo(o.scale, o.scale);
     object.units = o.units;
+    object.reg = o.reg;
+    object.anchor.setTo(0.5, 0.5);
+    object.text = game.add.text(o.x, o.y, o.units, { font: "15px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5});
+    object.text.anchor.setTo(0.5,0);
     game.playerGroup.add(object);
   });
 }
