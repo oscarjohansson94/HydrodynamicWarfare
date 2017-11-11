@@ -34,11 +34,11 @@ game.checkGameConditionTimer.start();
 
 
   game.aiOffensiveTimer = game.time.create(false);
-  game.aiOffensiveTimer.loop(500, function(){updateOffensiveAI(game);}, this);
+  game.aiOffensiveTimer.loop(1000, function(){updateOffensiveAI(game);}, this);
   game.aiOffensiveTimer.start();
 
   game.aiDefensiveTimer = game.time.create(false);
-  game.aiDefensiveTimer.loop(500, function(){updateDefensiveAI(game);}, this);
+  game.aiDefensiveTimer.loop(1000, function(){updateDefensiveAI(game);}, this);
   game.aiDefensiveTimer.start();
 
 }

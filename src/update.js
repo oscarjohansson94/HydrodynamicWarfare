@@ -179,11 +179,43 @@ function updateDumbPlayer(game, pEnum) {
 function updateDefensiveAI(game) {
   if(game.map.ai.A1 == aiEnum.DEFENSIVE){
     updateDefensivePlayer(game, ownerEnum.AI1);
-  } else if(game.map.ai.A2 == aiEnum.DEFENSIVE) {
+  } 
+  if(game.map.ai.A2 == aiEnum.DEFENSIVE) {
     updateDefensivePlayer(game, ownerEnum.AI2);
-  } else if(game.map.ai.A3 == aiEnum.DEFENSIVE) {
+  } 
+  if(game.map.ai.A3 == aiEnum.DEFENSIVE) {
     updateDefensivePlayer(game, ownerEnum.AI3);
   }
+}
+
+function updateOffensiveAI(game) {
+  if(game.map.ai.A1 == aiEnum.OFFENSIVE){
+    updateOffensivePlayer(game, ownerEnum.AI1);
+  } 
+  if(game.map.ai.A2 == aiEnum.OFFENSIVE) {
+    updateOffensivePlayer(game, ownerEnum.AI2);
+  }
+  if(game.map.ai.A3 == aiEnum.OFFENSIVE) {
+    updateOffensivePlayer(game, ownerEnum.AI3);
+  }
+}
+
+function updateOffensivePlayer(game, pEnum) {
+  var minI = -1;
+  var minE = 10000;
+  for(var i = 0; i < game.playerGroup.length; i++) {
+    var p = game.playerGroup.getAt(i);
+      if((p.owner != pEnum || p.units < 20) && p.units < minE && p.owner != ownerEnum.NONE) {
+        minE = p.units;
+        minI = i;
+      }
+  }
+  game.playerGroup.forEach(function(p) {
+    if(p.owner == pEnum && p.units > 30 && minI != -1 && p != game.playerGroup.getAt(minI)) {
+    sendUnitsCactus(game, p, game.playerGroup.getAt(minI));
+    }
+  });
+  
 }
 
 function updateDefensivePlayer(game, pEnum) {
@@ -224,9 +256,3 @@ function updateDefensivePlayer(game, pEnum) {
 
 }
 
-function updateOffensiveAI(game) {
-  game.playerGroup.forEach(function(p) {
-    if(p.ai == aiEnum.OFFENSIVE) {
-    }
-  });
-}
