@@ -69,3 +69,39 @@ var level4 = {
     //debug(game);
   }
 };
+
+var level5 = {
+  preload: function() {
+    game.map = map5;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
+
+var level6 = {
+  preload: function() {
+    game.map = map6;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
