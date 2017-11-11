@@ -3,9 +3,10 @@ function updateState(game){
   game.world.bringToTop(game.playerGroup);
   game.world.bringToTop(game.textGroup);
   game.world.bringToTop(game.waterGroup);
+  game.world.bringToTop(game.statusText);
 
 
-  
+
 
   if(game.input.activePointer.isDown) {
     game.mouseDown = true;
@@ -179,10 +180,10 @@ function updateDumbPlayer(game, pEnum) {
 function updateDefensiveAI(game) {
   if(game.map.ai.A1 == aiEnum.DEFENSIVE){
     updateDefensivePlayer(game, ownerEnum.AI1);
-  } 
+  }
   if(game.map.ai.A2 == aiEnum.DEFENSIVE) {
     updateDefensivePlayer(game, ownerEnum.AI2);
-  } 
+  }
   if(game.map.ai.A3 == aiEnum.DEFENSIVE) {
     updateDefensivePlayer(game, ownerEnum.AI3);
   }
@@ -191,7 +192,7 @@ function updateDefensiveAI(game) {
 function updateOffensiveAI(game) {
   if(game.map.ai.A1 == aiEnum.OFFENSIVE){
     updateOffensivePlayer(game, ownerEnum.AI1);
-  } 
+  }
   if(game.map.ai.A2 == aiEnum.OFFENSIVE) {
     updateOffensivePlayer(game, ownerEnum.AI2);
   }
@@ -215,7 +216,7 @@ function updateOffensivePlayer(game, pEnum) {
     sendUnitsCactus(game, p, game.playerGroup.getAt(minI));
     }
   });
-  
+
 }
 
 function updateDefensivePlayer(game, pEnum) {
@@ -255,4 +256,3 @@ function updateDefensivePlayer(game, pEnum) {
   }
 
 }
-

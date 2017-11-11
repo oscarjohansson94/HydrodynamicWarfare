@@ -41,4 +41,7 @@ game.checkGameConditionTimer.start();
   game.aiDefensiveTimer.loop(1000, function(){updateDefensiveAI(game);}, this);
   game.aiDefensiveTimer.start();
 
+  game.statusText = game.add.text(game.width/2, game.height/2, "",{ font: "48px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5} );
+  game.statusText.anchor.setTo(0.5, 0.5);
+
 }

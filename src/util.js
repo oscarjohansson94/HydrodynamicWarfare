@@ -82,9 +82,16 @@ function checkGameCondition(game) {
 
 
 function gameOverCondition(game){
-  console.log("GAME OVER!");
+  if(game.statusText.text == "Game over!") {
+    game.state.restart();
+  }
+  game.statusText.text = "Game over!";
 }
 
 function winCondition(game){
-  console.log("YOU WIN!");
+  if(game.statusText.text == "You win!") {
+    game.state.start(game.nextState);
+  }
+  game.statusText.text = "You win!";
+
 }
