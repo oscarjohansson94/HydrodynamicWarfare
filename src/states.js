@@ -12,5 +12,6 @@ var level1 = {
   shutdown: function() {
   },
   render: function () {
+    //debug(game);
   }
 };

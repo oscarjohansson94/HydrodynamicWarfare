@@ -1,8 +1,8 @@
 function createState(game){
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  console.log(game.input);
   game.playerGroup = game.add.group();
   game.waterGroup = game.add.group();
+  game.textGroup = game.add.group();
   game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
   game.selection = null;
   game.map.forEach(function(o) {
@@ -15,9 +15,11 @@ function createState(game){
     object.inputEnable = true;
     object.anchor.setTo(0.5, 0.5);
     object.text = game.add.text(o.x, o.y, o.units, { font: "15px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5});
-    object.text.anchor.setTo(0.5,0);
+    object.text.anchor.setTo(0.5,0.5);
+    game.physics.arcade.enable(object);
+    object.body.immovable = true;
     game.playerGroup.add(object);
-    game.playerGroup.add(object.text);
+    game.textGroup.add(object.text);
   });
   game.timer = game.time.create(false);
   game.timer.loop(500, function(){updateUnits(game);}, this);

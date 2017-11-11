@@ -23,3 +23,13 @@ function getColor(owner) {
         return 0xc300ff;
     }
 }
+
+function debug(game) {
+  game.playerGroup.forEach(function(p) {
+    game.debug.body(p, 'rgba(0, 0, 235, 1)', false);
+  });
+  game.waterGroup.forEach(function(w) {
+    game.debug.body(w, 'rgba(255, 0, 0, 1)', false);
+  });
+
+}
