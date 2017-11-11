@@ -8,7 +8,7 @@ function updateState(game){
   checkGameCondition(game);
 
   if(game.input.activePointer.isDown) {
-      game.mouseDown = true;
+    game.mouseDown = true;
     game.playerGroup.forEach(function(p) {
       if((p.getBounds().contains(game.input.activePointer.x, game.input.activePointer.y))) {
         if(p.owner == ownerEnum.PLAYER && p.alpha == 1) {
@@ -19,21 +19,20 @@ function updateState(game){
     });
   }
   if(!game.input.activePointer.isDown && game.mouseDown) {
-     game.playerGroup.forEach(function(p) {
+    game.playerGroup.forEach(function(p) {
       if(p.getBounds().contains(game.input.activePointer.x, game.input.activePointer.y)){
         if(p.owner !== ownerEnum.PLAYER) {
-         sendUnitsSelection(game, p);
+          sendUnitsSelection(game, p);
         } else {
           sendFriendlyUnits(game, p);
         }
       }
-  });
+    });
+    destroyLines(game);
     game.mouseDown = false;
     game.playerGroup.forEach(function(p) {
-      if(p.owner === ownerEnum.PLAYER) {
+      if(p.alpha != 1)
         p.alpha = 1;
-        destroyLines(game);
-      }
     });
   }
   updateWater(game);
@@ -83,18 +82,18 @@ function createWater(game, start, end) {
 function updateUnits(game) {
   game.playerGroup.forEach(function(p) {
     if(p.owner !== ownerEnum.NONE) {
-    p.units += p.reg;
-    updateText(p);
+      p.units += p.reg;
+      updateText(p);
     }
   });
 }
 
 function updateText(cactus) {
-    cactus.text.text = Math.round(cactus.units);
+  cactus.text.text = Math.round(cactus.units);
 }
 
 function distance(a, b) {
-    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
 
@@ -128,10 +127,10 @@ function createLine(game, start) {
 
 function updateLines(game) {
   game.lineGroup.forEach(function(l) {
-  var dist = distance(l, game.input);
-  var angle =  Math.atan2(l.x - game.input.x,l.y - game.input.y);
-  l.height = dist;
-  l.angle = -180*angle/Math.PI + 180;
+    var dist = distance(l, game.input);
+    var angle =  Math.atan2(l.x - game.input.x,l.y - game.input.y);
+    l.height = dist;
+    l.angle = -180*angle/Math.PI + 180;
   });
 }
 
@@ -139,16 +138,95 @@ function destroyLines(game) {
   game.lineGroup.removeAll();
 }
 
-function updateAI(game) {
+function updateDumbAI(game) {
+  if(game.map.ai.A1 == aiEnum.DUMB){
+    updateDumbPlayer(game, ownerEnum.AI1);
+  }
+  if(game.map.ai.A2 == aiEnum.DUMB) {
+    updateDumbPlayer(game, ownerEnum.AI2);
+  }
+  if(game.map.ai.A3 == aiEnum.DUMB) {
+    updateDumbPlayer(game, ownerEnum.AI3);
+  }
   game.playerGroup.forEach(function(p) {
-    if(p.owner == ownerEnum.AI1 || p.owner == ownerEnum.AI2 ||p.owner == ownerEnum.AI3) {
-      if(p.ai == aiEnum.DUMB) {
-        var target = game.playerGroup.getAt(Math.floor(Math.random()*game.playerGroup.length));
-        if(target != p) {
-          sendUnitsCactus(game, p, target);
+    if(getAi(game, p) == aiEnum.DUMB) {
+    }
+  });
+}
 
-        }
+function getAi(game, player) {
+  if(player.owner == ownerEnum.AI1){
+    return game.map.ai.A1;
+  } else if(player.onwer == ownerEnum.AI2) {
+    return game.map.ai.A2;
+  } else if(player.onwer == ownerEnum.AI2) {
+    return game.map.ai.A3;
+  }
+}
+
+function updateDumbPlayer(game, pEnum) {
+  game.playerGroup.forEach(function(p) {
+    if(p.owner == pEnum) {
+      var target = game.playerGroup.getAt(Math.floor(Math.random()*game.playerGroup.length));
+      if(target != p) {
+        sendUnitsCactus(game, p, target);
       }
+    }
+  });
+}
+
+
+function updateDefensiveAI(game) {
+  if(game.map.ai.A1 == aiEnum.DEFENSIVE){
+    updateDefensivePlayer(game, ownerEnum.AI1);
+  } else if(game.map.ai.A2 == aiEnum.DEFENSIVE) {
+    updateDefensivePlayer(game, ownerEnum.AI2);
+  } else if(game.map.ai.A3 == aiEnum.DEFENSIVE) {
+    updateDefensivePlayer(game, ownerEnum.AI3);
+  }
+}
+
+function updateDefensivePlayer(game, pEnum) {
+  var inf = 10000;
+  var min = inf;
+  var min_index = -1;
+  var minE = inf;
+  var minI = -1;
+  var max = 0;
+  var max_index = -1;
+  for(var i = 0; i < game.playerGroup.length; i++) {
+    var p = game.playerGroup.getAt(i);
+    if(p.owner === pEnum) {
+      if(p.units < min) {
+        min = p.units;
+        min_index = i;
+      }
+      if(p.units > max) {
+        max = p.units;
+        max_index = i;
+      }
+    } else {
+      if(p.units < minE) {
+        minE = p.units;
+        minI = i;
+      }
+    }
+  }
+
+  // send to help
+  if(min < 20 && max > 40 && max_index != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(min_index));
+  } else if (min >= 40 && minI != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(minI));
+  } else if(max > 30 && min < max/2 && max_index != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(min_index));
+  }
+
+}
+
+function updateOffensiveAI(game) {
+  game.playerGroup.forEach(function(p) {
+    if(p.ai == aiEnum.OFFENSIVE) {
     }
   });
 }

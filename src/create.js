@@ -10,7 +10,6 @@ function createState(game){
     var object = game.add.sprite(o.x, o.y, 'cactus');
     object.tint = getColor(o.owner);
     object.owner = o.owner;
-    object.ai = o.AI;
     object.scale.setTo(o.scale, o.scale);
     object.units = o.units;
     object.reg = o.reg; object.inputEnable = true;
@@ -24,8 +23,18 @@ function createState(game){
   });
   game.timer = game.time.create(false);
   game.timer.loop(500, function(){updateUnits(game);}, this);
-  game.aiTimer = game.time.create(false);
-  game.aiTimer.loop(3000, function(){updateAI(game);}, this);
-  game.aiTimer.start();
   game.timer.start();
+  game.aiDumbTimer = game.time.create(false);
+  game.aiDumbTimer.loop(3000, function(){updateDumbAI(game);}, this);
+  game.aiDumbTimer.start();
+
+    
+  game.aiOffensiveTimer = game.time.create(false);
+  game.aiOffensiveTimer.loop(500, function(){updateOffensiveAI(game);}, this);
+  game.aiOffensiveTimer.start();
+
+  game.aiDefensiveTimer = game.time.create(false);
+  game.aiDefensiveTimer.loop(500, function(){updateDefensiveAI(game);}, this);
+  game.aiDefensiveTimer.start();
+ 
 }
