@@ -1,9 +1,9 @@
 var ownerEnum = {
-    NONE: 0,
-    PLAYER: 1,
-    AI1: 2,
-    AI2: 3,
-    AI3: 4
+  NONE: 0,
+  PLAYER: 1,
+  AI1: 2,
+  AI2: 3,
+  AI3: 4
 }
 
 var aiEnum = {
@@ -14,17 +14,17 @@ var aiEnum = {
 }
 
 function getColor(owner) {
-    if(owner === ownerEnum.NONE) {
-        return 0xa9a9aa;
-    } else if (owner === ownerEnum.PLAYER) {
-        return 0x0000ff;
-    } else if (owner === ownerEnum.AI1) {
-        return 0xff0000;
-    } else if (owner === ownerEnum.AI2) {
-        return 0x0cff00;
-    } else if (owner === ownerEnum.AI3) {
-        return 0xc300ff;
-    }
+  if(owner === ownerEnum.NONE) {
+    return 0xa9a9aa;
+  } else if (owner === ownerEnum.PLAYER) {
+    return 0x0000ff;
+  } else if (owner === ownerEnum.AI1) {
+    return 0xff0000;
+  } else if (owner === ownerEnum.AI2) {
+    return 0x0cff00;
+  } else if (owner === ownerEnum.AI3) {
+    return 0xc300ff;
+  }
 }
 
 function debug(game) {
@@ -34,5 +34,64 @@ function debug(game) {
   game.waterGroup.forEach(function(w) {
     game.debug.body(w, 'rgba(255, 0, 0, 1)', false);
   });
+
+}
+
+
+function checkGameCondition(game) {
+  var ai1 = false;
+  var ai2 = false;
+  var ai3 = false;
+  var player = false;
+
+  game.playerGroup.forEach(function(p) {
+    if(p.owner == ownerEnum.AI1) {
+      ai1 = true;
+    }else if(p.owner == ownerEnum.AI2){
+      ai2 = true;
+    }else if(p.owner == ownerEnum.AI3){
+      ai3 = true;
+    }else if(p.owner == ownerEnum.PLAYER){
+      player = true;
+    }
+
+
+  });
+  game.waterGroup.forEach(function(p) {
+    if(p.owner == ownerEnum.AI1) {
+      ai1 = true;
+    }else if(p.owner == ownerEnum.AI2){
+      ai2 = true;
+    }else if(p.owner == ownerEnum.AI3){
+      ai3 = true;
+    }else if(p.owner == ownerEnum.PLAYER){
+      player = true;
+    }
+
+
+  });
+
+  if(!player){
+    gameOverCondition(game);
+  }
+
+  if(!ai1 && !ai2 && !ai3){
+    winCondition(game);
+  }
+}
+
+
+function gameOverCondition(game){
+  if(game.statusText.text == "Game over!") {
+    game.state.restart();
+  }
+  game.statusText.text = "Game over!";
+}
+
+function winCondition(game){
+  if(game.statusText.text == "You win!") {
+    game.state.start(game.nextState);
+  }
+  game.statusText.text = "You win!";
 
 }
