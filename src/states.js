@@ -1,3 +1,20 @@
+var state_startscreen = {
+  preload: function() {
+    menuscreen_preload(game);
+  },
+  create: function() {
+    menuscreen_create(game);
+  },
+  update: function() {
+    menuscreen_update(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+  }
+};
+
+
 var level1 = {
   preload: function() {
     game.map = map1;
