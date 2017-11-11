@@ -78,7 +78,7 @@ function createWater(game, start, end) {
 
 function updateUnits(game) {
   game.playerGroup.forEach(function(p) {
-    if(p.owner != ownerEnum.NONE) {
+    if(p.owner !== ownerEnum.NONE) {
     p.units += p.reg;
     updateText(p);
     }
@@ -133,4 +133,18 @@ function updateLines(game) {
 
 function destroyLines(game) {
   game.lineGroup.removeAll();
+}
+
+function updateAI(game) {
+  game.playerGroup.forEach(function(p) {
+    if(p.owner == ownerEnum.AI1 || p.owner == ownerEnum.AI2 ||p.owner == ownerEnum.AI3) {
+      if(p.ai == aiEnum.DUMB) {
+        var target = game.playerGroup.getAt(Math.floor(Math.random()*game.playerGroup.length));
+        if(target != p) {
+          sendUnitsCactus(game, p, target);
+
+        }
+      }
+    }
+  });
 }

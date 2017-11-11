@@ -10,10 +10,10 @@ function createState(game){
     var object = game.add.sprite(o.x, o.y, 'cactus');
     object.tint = getColor(o.owner);
     object.owner = o.owner;
+    object.ai = o.AI;
     object.scale.setTo(o.scale, o.scale);
     object.units = o.units;
-    object.reg = o.reg;
-    object.inputEnable = true;
+    object.reg = o.reg; object.inputEnable = true;
     object.anchor.setTo(0.5, 0.5);
     object.text = game.add.text(o.x, o.y, o.units, { font: "15px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5});
     object.text.anchor.setTo(0.5,0.5);
@@ -24,5 +24,8 @@ function createState(game){
   });
   game.timer = game.time.create(false);
   game.timer.loop(500, function(){updateUnits(game);}, this);
+  game.aiTimer = game.time.create(false);
+  game.aiTimer.loop(3000, function(){updateAI(game);}, this);
+  game.aiTimer.start();
   game.timer.start();
 }

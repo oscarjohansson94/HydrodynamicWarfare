@@ -7,7 +7,10 @@ var ownerEnum = {
 }
 
 var aiEnum = {
-    DUMB: 0
+  DUMB: 0,
+  OFFENSIVE: 1,
+  DEFENSIVE: 2,
+  SMART: 3
 }
 
 function getColor(owner) {
