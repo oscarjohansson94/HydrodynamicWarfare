@@ -5,7 +5,7 @@ function updateState(game){
   game.world.bringToTop(game.waterGroup);
 
 
-  checkGameCondition(game);
+  
 
   if(game.input.activePointer.isDown) {
     game.mouseDown = true;

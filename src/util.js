@@ -57,6 +57,19 @@ function checkGameCondition(game) {
 
 
   });
+  game.waterGroup.forEach(function(p) {
+    if(p.owner == ownerEnum.AI1) {
+      ai1 = true;
+    }else if(p.owner == ownerEnum.AI2){
+      ai2 = true;
+    }else if(p.owner == ownerEnum.AI3){
+      ai3 = true;
+    }else if(p.owner == ownerEnum.PLAYER){
+      player = true;
+    }
+
+
+  });
 
   if(!player){
     gameOverCondition(game);

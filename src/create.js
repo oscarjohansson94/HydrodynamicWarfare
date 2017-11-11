@@ -28,7 +28,11 @@ function createState(game){
   game.aiDumbTimer.loop(3000, function(){updateDumbAI(game);}, this);
   game.aiDumbTimer.start();
 
-    
+game.checkGameConditionTimer = game.time.create(false);
+game.checkGameConditionTimer.loop(5000, function(){checkGameCondition(game);}, this);
+game.checkGameConditionTimer.start();
+
+
   game.aiOffensiveTimer = game.time.create(false);
   game.aiOffensiveTimer.loop(500, function(){updateOffensiveAI(game);}, this);
   game.aiOffensiveTimer.start();
@@ -36,5 +40,5 @@ function createState(game){
   game.aiDefensiveTimer = game.time.create(false);
   game.aiDefensiveTimer.loop(500, function(){updateDefensiveAI(game);}, this);
   game.aiDefensiveTimer.start();
- 
+
 }
