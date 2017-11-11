@@ -6,7 +6,7 @@ function createState(game){
   game.lineGroup = game.add.group();
   game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
   game.selection = null;
-  game.map.forEach(function(o) {
+  game.map.cactus.forEach(function(o) {
     var object = game.add.sprite(o.x, o.y, 'cactus');
     object.tint = getColor(o.owner);
     object.owner = o.owner;
