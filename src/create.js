@@ -3,6 +3,7 @@ function createState(game){
   game.playerGroup = game.add.group();
   game.waterGroup = game.add.group();
   game.textGroup = game.add.group();
+  game.lineGroup = game.add.group();
   game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
   game.selection = null;
   game.map.forEach(function(o) {

@@ -1,4 +1,5 @@
 function updateState(game){
+  game.world.bringToTop(game.lineGroup);
   game.world.bringToTop(game.playerGroup);
   game.world.bringToTop(game.textGroup);
   game.world.bringToTop(game.waterGroup);
@@ -6,7 +7,8 @@ function updateState(game){
       game.mouseDown = true;
     game.playerGroup.forEach(function(p) {
       if((p.getBounds().contains(game.input.activePointer.x, game.input.activePointer.y))) {
-        if(p.owner == ownerEnum.PLAYER) {
+        if(p.owner == ownerEnum.PLAYER && p.alpha == 1) {
+          createLine(game, p);
           p.alpha = 0.5;
         } 
       }
@@ -26,10 +28,12 @@ function updateState(game){
     game.playerGroup.forEach(function(p) {
       if(p.owner === ownerEnum.PLAYER) {
         p.alpha = 1;
+        destroyLines(game);
       }
     });
   }    
   updateWater(game);
+  updateLines(game);
 }
 
 function sendUnitsSelection(game, target) {
@@ -85,10 +89,14 @@ function updateText(cactus) {
     cactus.text.text = Math.round(cactus.units);
 }
 
+function distance(a, b) {
+    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
+
+
 function updateWater(game){
   game.waterGroup.forEach(function(w) {
-    var dist = Math.sqrt(Math.pow(w.body.x - w.target.x, 2) +
-      Math.pow(w.body.y - w.target.y, 2));
+    var dist = distance(w.body, w.target);
     if(dist < w.target.height/2) {
       if(w.owner == w.target.owner){
         w.target.units++;
@@ -106,4 +114,23 @@ function updateWater(game){
 function changeOwner(newOwner, cactus) {
   cactus.owner = newOwner;
   cactus.tint = getColor(newOwner);
+}
+ 
+function createLine(game, start) {
+  var line = game.add.sprite(start.x, start.y, 'line');
+  game.lineGroup.add(line);
+}
+
+
+function updateLines(game) {
+  game.lineGroup.forEach(function(l) {
+  var dist = distance(l, game.input);
+  var angle =  Math.atan2(l.x - game.input.x,l.y - game.input.y);
+  l.height = dist;
+  l.angle = -180*angle/Math.PI + 180;
+  });
+}
+
+function destroyLines(game) {
+  game.lineGroup.removeAll();
 }
