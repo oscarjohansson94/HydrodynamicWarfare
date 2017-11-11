@@ -14,8 +14,12 @@ function updateState(game){
   }
   if(!game.input.activePointer.isDown && game.mouseDown) {
      game.playerGroup.forEach(function(p) {
-      if(p.getBounds().contains(game.input.activePointer.x, game.input.activePointer.y) && p.owner !== ownerEnum.PLAYER) {
-        sendUnitsSelection(game, p);
+      if(p.getBounds().contains(game.input.activePointer.x, game.input.activePointer.y)){
+        if(p.owner !== ownerEnum.PLAYER) {
+         sendUnitsSelection(game, p);
+        } else {
+          sendFriendlyUnits(game, p);
+        }
       }
   });
     game.mouseDown = false;
@@ -31,6 +35,14 @@ function updateState(game){
 function sendUnitsSelection(game, target) {
   game.playerGroup.forEach(function(p) {
     if(p.alpha == 0.5) {
+      sendUnitsCactus(game, p, target);
+    }
+  });
+}
+
+function sendFriendlyUnits(game, target) {
+  game.playerGroup.forEach(function(p) {
+    if(p.alpha == 0.5 && p != target) {
       sendUnitsCactus(game, p, target);
     }
   });
@@ -62,8 +74,10 @@ function createWater(game, start, end) {
 
 function updateUnits(game) {
   game.playerGroup.forEach(function(p) {
+    if(p.owner != ownerEnum.NONE) {
     p.units += p.reg;
     updateText(p);
+    }
   });
 }
 
