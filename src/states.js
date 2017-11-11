@@ -6,7 +6,6 @@ var state_startscreen = {
     menuscreen_create(game);
   },
   update: function() {
-    menuscreen_update(game);
   },
   shutdown: function() {
   },
