@@ -3,6 +3,10 @@ function updateState(game){
   game.world.bringToTop(game.playerGroup);
   game.world.bringToTop(game.textGroup);
   game.world.bringToTop(game.waterGroup);
+
+
+  checkGameCondition(game);
+
   if(game.input.activePointer.isDown) {
       game.mouseDown = true;
     game.playerGroup.forEach(function(p) {
@@ -10,7 +14,7 @@ function updateState(game){
         if(p.owner == ownerEnum.PLAYER && p.alpha == 1) {
           createLine(game, p);
           p.alpha = 0.5;
-        } 
+        }
       }
     });
   }
@@ -31,7 +35,7 @@ function updateState(game){
         destroyLines(game);
       }
     });
-  }    
+  }
   updateWater(game);
   updateLines(game);
 }
@@ -115,7 +119,7 @@ function changeOwner(newOwner, cactus) {
   cactus.owner = newOwner;
   cactus.tint = getColor(newOwner);
 }
- 
+
 function createLine(game, start) {
   var line = game.add.sprite(start.x, start.y, 'line');
   game.lineGroup.add(line);
