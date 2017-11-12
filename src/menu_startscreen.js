@@ -13,7 +13,8 @@ function menuscreen_preload(game){
  * Create menu
  */
 function menuscreen_create(game){
-  game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
+  var image = game.add.sprite(0, 0, 'background');
+  image.width = game.width;
   text = game.add.text(game.world.centerX, 100, "Hydrodynamic Warfare", {font: 'Revalia', fontSize: 60, align: 'center', stroke: '#000000', strokeThickness: 5});
   text.anchor.setTo(0.5);
 

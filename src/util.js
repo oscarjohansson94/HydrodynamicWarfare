@@ -78,6 +78,8 @@ function checkGameCondition(game) {
   if(!ai1 && !ai2 && !ai3){
     winCondition(game);
   }
+
+  drawHUD(game, player, ai1, ai2, ai3);
 }
 
 
@@ -93,5 +95,51 @@ function winCondition(game){
     game.state.start(game.nextState);
   }
   game.statusText.text = "You win!";
+
+}
+
+
+function drawHUD(game, player, ai1, ai2, ai3){
+
+game.HUDGroup.removeAll();
+
+
+var ai1Count = 0;
+var ai2Count = 0;
+var ai3Count = 0;
+var playerCount = 0;
+
+  game.playerGroup.forEach(function(p) {
+    if(p.owner == ownerEnum.AI1 && ai1) {
+      ai1Count += p.units;
+    }else if(p.owner == ownerEnum.AI2 && ai2){
+      ai2Count += p.units;
+    }else if(p.owner == ownerEnum.AI3 && ai3){
+      ai3Count += p.units;
+    }else if(p.owner == ownerEnum.PLAYER && player){
+      playerCount += p.units;
+    }
+
+});
+
+game.waterGroup.forEach(function(w) {
+
+  if(w.owner == ownerEnum.AI1 && ai1) {
+    ai1Count++;
+  }else if(w.owner == ownerEnum.AI2 && ai2){
+    ai2Count++;
+  }else if(w.owner == ownerEnum.AI3 && ai3){
+    ai3Count++;
+  }else if(w.owner == ownerEnum.PLAYER && player){
+    playerCount++;
+  }
+
+});
+
+  if(playerCount)game.HUDGroup.add(game.add.text(1120, 150, Math.round(playerCount), { font: "24px Arial", fill: "#0000ff",stroke: '#000000', strokeThickness: 5}));
+  if(ai1Count)game.HUDGroup.add(game.add.text(1120, 180, Math.round(ai1Count), { font: "24px Arial", fill: "#ff0000",stroke: '#000000', strokeThickness: 5}));
+  if(ai2Count)game.HUDGroup.add(game.add.text(1120, 210, Math.round(ai2Count), { font: "24px Arial", fill: "#0cff00",stroke: '#000000', strokeThickness: 5}));
+  if(ai3Count)game.HUDGroup.add(game.add.text(1120, 240, Math.round(ai3Count), { font: "24px Arial", fill: "#c300ff",stroke: '#000000', strokeThickness: 5}));
+
 
 }

@@ -4,9 +4,10 @@ function createState(game){
   game.waterGroup = game.add.group();
   game.textGroup = game.add.group();
   game.lineGroup = game.add.group();
-  game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
+  game.HUDGroup = game.add.group();
+  game.add.image(0, 0, 'background');
+  game.stage.backgroundColor = "#e1bf92";
   var cactusCnt = 0;
-
   game.selection = null;
   game.map.cactus.forEach(function(o) {
     var object = game.add.sprite(o.x, o.y, 'cactus');
@@ -33,7 +34,7 @@ function createState(game){
   game.aiDumbTimer.start();
 
 game.checkGameConditionTimer = game.time.create(false);
-game.checkGameConditionTimer.loop(5000, function(){checkGameCondition(game);}, this);
+game.checkGameConditionTimer.loop(2000, function(){checkGameCondition(game);}, this);
 game.checkGameConditionTimer.start();
 
 
@@ -53,4 +54,5 @@ game.checkGameConditionTimer.start();
   game.statusText = game.add.text(game.width/2, game.height/2, "",{ font: "48px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5} );
   game.statusText.anchor.setTo(0.5, 0.5);
 
+  checkGameCondition(game);
 }

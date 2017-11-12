@@ -40,6 +40,7 @@ function updateState(game){
   updateLines(game);
 }
 
+
 function sendUnitsSelection(game, target) {
   game.playerGroup.forEach(function(p) {
     if(p.alpha == 0.5) {
