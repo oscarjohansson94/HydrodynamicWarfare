@@ -5,10 +5,14 @@ function createState(game){
   game.textGroup = game.add.group();
   game.lineGroup = game.add.group();
   game.add.image(game.world.centerX, game.world.centerY, 'background').anchor.set(0.5);
+  var cactusCnt = 0;
+
   game.selection = null;
   game.map.cactus.forEach(function(o) {
     var object = game.add.sprite(o.x, o.y, 'cactus');
     object.tint = getColor(o.owner);
+    object.nr = cactusCnt;
+    cactusCnt++;
     object.owner = o.owner;
     object.scale.setTo(o.scale, o.scale);
     object.units = o.units;
@@ -40,6 +44,11 @@ game.checkGameConditionTimer.start();
   game.aiDefensiveTimer = game.time.create(false);
   game.aiDefensiveTimer.loop(1000, function(){updateDefensiveAI(game);}, this);
   game.aiDefensiveTimer.start();
+
+  game.aiSmartTimer = game.time.create(false);
+  game.aiSmartTimer.loop(1000, function(){updateSmartAI(game);}, this);
+  game.aiSmartTimer.start();
+
 
   game.statusText = game.add.text(game.width/2, game.height/2, "",{ font: "48px Arial", fill: "#ffffff",stroke: '#000000', strokeThickness: 5} );
   game.statusText.anchor.setTo(0.5, 0.5);

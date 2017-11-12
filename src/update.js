@@ -64,8 +64,8 @@ function sendUnitsCactus(game, start, end) {
 }
 
 function createWater(game, start, end) {
-  var xCoord = start.x + Math.random()*20-10;
-  var yCoord = start.y + Math.random()*20-10;
+  var xCoord = start.x + Math.random()*60-30;
+  var yCoord = start.y + Math.random()*60-30;
   var water = game.add.sprite(xCoord,yCoord, 'water');
   var angle =  Math.atan2(xCoord - end.x,yCoord - end.y);
   water.anchor.setTo(0.5, 0.5);
@@ -206,9 +206,11 @@ function updateOffensivePlayer(game, pEnum) {
   var minE = 10000;
   for(var i = 0; i < game.playerGroup.length; i++) {
     var p = game.playerGroup.getAt(i);
-      if((p.owner != pEnum || p.units < 20) && p.units < minE && p.owner != ownerEnum.NONE) {
+      if((p.owner != pEnum || p.units < 20) && p.units <= minE && p.owner != ownerEnum.NONE) {
+        if(p.units < minE || (p.units == minE && Math.random() > 0.5)){ 
         minE = p.units;
         minI = i;
+        }
       }
   }
   game.playerGroup.forEach(function(p) {
@@ -216,6 +218,78 @@ function updateOffensivePlayer(game, pEnum) {
     sendUnitsCactus(game, p, game.playerGroup.getAt(minI));
     }
   });
+
+}
+
+function updateSmartAI(game) {
+  if(game.map.ai.A1 == aiEnum.SMART){
+    updateSmartPlayer(game, ownerEnum.AI1);
+  }
+  if(game.map.ai.A2 == aiEnum.SMART) {
+    updateSmartPlayer(game, ownerEnum.AI2);
+  }
+  if(game.map.ai.A3 == aiEnum.SMART) {
+    updateSmartPlayer(game, ownerEnum.AI3);
+  }
+}
+
+function updateSmartPlayer(game, pEnum) {
+   var count = {};
+  game.playerGroup.forEach(function(p) {
+    count[p.nr] = 0;
+  });
+  game.waterGroup.forEach(function(w) {
+    if(w.owner == pEnum && w.target.owner == pEnum) {
+      count[w.target.nr] = count[w.target.nr] + 1;
+    } else if(w.owner == pEnum && w.target.owner != pEnum) {
+      count[w.target.nr] = count[w.target.nr] - 1;
+    } else if(w.owner != pEnum && w.target.owner == pEnum) {
+      count[w.target.nr] = count[w.target.nr] - 1;
+    } else if(w.owner != pEnum && w.target.owner != pEnum) {
+      count[w.target.nr] = count[w.target.nr] + 1;
+    } 
+  }); 
+  var inf = 10000;
+  var min = inf;
+  var min_index = -1;
+  var minE = inf;
+  var minI = -1;
+  var max = 0;
+  var max_index = -1;
+  for(var i = 0; i < game.playerGroup.length; i++) {
+    var p = game.playerGroup.getAt(i);
+  var units = p.units + count[p.nr];
+    if(p.owner === pEnum) {
+      if(units <= min) {
+        if(units < min || (units == min && Math.random() > 0.5)){ 
+        min = units;
+        min_index = i;
+        }
+      }
+      if(units >= max) {
+        if(units > max || (units == max && Math.random() > 0.5)){ 
+        max = units;
+        max_index = i;
+        }
+      }
+    } else {
+      if(units <= minE) {
+        if(units < minE || (units == minE && Math.random() > 0.5)){ 
+        minE = units;
+        minI = i;
+        }
+      }
+    }
+  }
+
+  // send to help
+  if(min < 15 && max > 40 && max_index != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(min_index));
+  } else if (min >= 30 && minI != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(minI));
+  } else if(max > 30 && min < max/2 && max_index != -1) {
+    sendUnitsCactus(game, game.playerGroup.getAt(max_index), game.playerGroup.getAt(min_index));
+  }
 
 }
 
@@ -230,18 +304,24 @@ function updateDefensivePlayer(game, pEnum) {
   for(var i = 0; i < game.playerGroup.length; i++) {
     var p = game.playerGroup.getAt(i);
     if(p.owner === pEnum) {
-      if(p.units < min) {
+      if(p.units <= min) {
+        if(p.units < min || (p.units == min && Math.random() > 0.5)){ 
         min = p.units;
         min_index = i;
+        }
       }
-      if(p.units > max) {
+      if(p.units >= max) {
+        if(p.units > max || (p.units == max && Math.random() > 0.5)){ 
         max = p.units;
         max_index = i;
+        }
       }
     } else {
-      if(p.units < minE) {
+      if(p.units <= minE) {
+        if(p.units < minE || (p.units == minE && Math.random() > 0.5)){ 
         minE = p.units;
         minI = i;
+        }
       }
     }
   }
