@@ -43,7 +43,7 @@ function updateState(game){
 
 function sendUnitsSelection(game, target) {
   game.playerGroup.forEach(function(p) {
-    if(p.alpha == 0.5) {
+    if(p.alpha == 0.5 && p.owner == ownerEnum.PLAYER) {
       sendUnitsCactus(game, p, target);
     }
   });
