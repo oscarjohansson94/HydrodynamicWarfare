@@ -29,4 +29,21 @@ function menuscreen_create(game){
     game.state.start('level1');
   }, this, 2, 1, 0);
     game.button.anchor.setTo(0.5,0.5);
+
+
+    creditText1 = game.add.text(game.width/4, game.height*8/10, "Oscar Johansson",{font: 'Revalia', fontSize: 30, align: 'center', stroke: '#000000', strokeThickness: 5});
+    creditText1.anchor.setTo(0.5, 0.5);
+    creditText1.fill = grd;
+
+    creditText2 = game.add.text(game.width/4, game.height*9/10, "Github: oscarjohansson94",{font: 'Revalia', fontSize: 30, align: 'center', stroke: '#000000', strokeThickness: 5});
+    creditText2.anchor.setTo(0.5, 0.5);
+    creditText2.fill = grd;
+
+    creditText3 = game.add.text(game.width*3/4, game.height*8/10, "Oscar Magnusson",{font: 'Revalia', fontSize: 30, align: 'center', stroke: '#000000', strokeThickness: 5});
+    creditText3.anchor.setTo(0.5, 0.5);
+    creditText3.fill = grd;
+
+    creditText4 = game.add.text(game.width*3/4, game.height*9/10, "Github: balobba",{font: 'Revalia', fontSize: 30, align: 'center', stroke: '#000000', strokeThickness: 5});
+    creditText4.anchor.setTo(0.5, 0.5);
+    creditText4.fill = grd;
 }
