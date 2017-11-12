@@ -111,8 +111,84 @@ var level5 = {
 
 var level6 = {
   preload: function() {
-    game.nextState = "level1";
+    game.nextState = "level7";
     game.map = map6;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
+
+var level7 = {
+  preload: function() {
+    game.nextState = "level8";
+    game.map = map7;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
+
+var level8 = {
+  preload: function() {
+    game.nextState = "level9";
+    game.map = map8;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
+
+var level9 = {
+  preload: function() {
+    game.nextState = "level10";
+    game.map = map9;
+    preloadState(game);
+  },
+  create: function() {
+    createState(game);
+  },
+  update: function() {
+    updateState(game);
+  },
+  shutdown: function() {
+  },
+  render: function () {
+    //debug(game);
+  }
+};
+
+var level10 = {
+  preload: function() {
+    game.nextState = "state_startscreen";
+    game.map = map10;
     preloadState(game);
   },
   create: function() {
