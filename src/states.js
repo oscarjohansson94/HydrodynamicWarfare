@@ -187,7 +187,7 @@ var level9 = {
 
 var level10 = {
   preload: function() {
-    game.nextState = "state_startscreen";
+    game.nextState = "menu_startscreen";
     game.map = map10;
     preloadState(game);
   },
