@@ -4,7 +4,7 @@
 function menuscreen_preload(game){
   //  Load the Google WebFont Loader script
   game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-      game.load.image('background', '../assets/background.png');
+  game.load.image('background', 'assets/background.png');
 
   game.load.image('buttonstart', 'assets/buttonstart.png');
 }
