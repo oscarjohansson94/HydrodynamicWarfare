@@ -4,6 +4,7 @@ function updateState(game){
   game.world.bringToTop(game.textGroup);
   game.world.bringToTop(game.waterGroup);
   game.world.bringToTop(game.statusText);
+  game.world.bringToTop(game.buttonGroup);
 
 
 

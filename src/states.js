@@ -24,6 +24,7 @@ var level1 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -43,6 +44,7 @@ var level2 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -62,6 +64,7 @@ var level3 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -81,6 +84,7 @@ var level4 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -100,6 +104,7 @@ var level5 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -119,6 +124,7 @@ var level6 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -138,6 +144,7 @@ var level7 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -157,6 +164,7 @@ var level8 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -176,6 +184,7 @@ var level9 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
@@ -195,6 +204,7 @@ var level10 = {
     createState(game);
   },
   update: function() {
+    if(!game.pause)
     updateState(game);
   },
   shutdown: function() {
