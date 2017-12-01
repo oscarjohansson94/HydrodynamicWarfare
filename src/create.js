@@ -9,7 +9,10 @@ function createState(game){
   game.add.image(0, 0, 'background');
   game.stage.backgroundColor = "#e1bf92";
   game.pause = false;
-  localStorage.setItem("highestlevel", game.currentlevel);
+  var currentHighestlvl = localStorage.getItem("highestlevel");
+  if(currentHighestlvl == null || currentHighestlvl < game.currentlevel) {
+    localStorage.setItem("highestlevel", game.currentlevel);
+  }
 
   game.buttonPause =  game.add.button(game.width-50, 10, 'pause', function() {
     game.pause = true;
