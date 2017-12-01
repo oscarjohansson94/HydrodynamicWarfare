@@ -26,7 +26,7 @@ function menuscreen_create(game){
   text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 
   game.button =  game.add.button(game.width/2, game.height*7/10, 'buttonstart', function() {
-    game.state.start('level1');
+    game.state.start('selectlevel');
   }, this, 2, 1, 0);
     game.button.anchor.setTo(0.5,0.5);
 

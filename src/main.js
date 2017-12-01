@@ -1,6 +1,7 @@
 var game = new Phaser.Game(1220, 608, Phaser.CANVAS, '');
 
 game.state.add('menu_startscreen', state_startscreen);
+game.state.add('selectlevel', state_selectlevel);
 game.state.add('level1', level1);
 game.state.add('level2', level2);
 game.state.add('level3', level3);

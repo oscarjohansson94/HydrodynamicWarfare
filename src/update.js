@@ -8,7 +8,6 @@ function updateState(game){
 
 
 
-
   if(game.input.activePointer.isDown) {
     game.mouseDown = true;
     game.playerGroup.forEach(function(p) {
